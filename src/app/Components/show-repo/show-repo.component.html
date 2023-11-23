@@ -1,0 +1,82 @@
+<div *ngIf="profile.name === ''; else elseBlock" class="container px-20 py-6 justify-center">
+    <div class="flex flex-row gap-8 md:gap-32">
+        <div class="flex flex-col justify-center gap-5">
+            <div class="w-24 h-24 md:w-48 md:h-48 bg-gray-300 rounded-full animate-pulse"></div>
+            <div class="animate-pulse">
+                <div class="bg-gray-300 h-6 md:h-8 w-24 md:w-48 block"></div>
+            </div>
+        </div>
+
+        <div class="flex flex-col justify-start gap-5">
+            <div class="bg-gray-300 h-6 md:h-8 w-32 md:w-50 block animate-pulse"></div>
+            <div class="bg-gray-300 h-4 w-64 block animate-pulse"></div>
+            <div class="bg-gray-300 h-4 w-48 block animate-pulse"></div>
+        </div>
+    </div>
+
+    <div class="flex flex-col mt-8 md:mt-10">
+        <div *ngFor="let _ of [].constructor(6); let i = index" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-white border border-white-200 rounded-lg shadow animate-pulse">
+                <h5 class="bg-gray-300 h-8 w-36 md:h-8 md:w-44 block animate-pulse mb-2"></h5>
+                <p class="bg-gray-300 h-4 w-40 md:w-50 block animate-pulse mb-2"></p>
+                <p class="bg-gray-300 h-4 w-40 md:w-50 block animate-pulse mb-2"></p>
+                <p class="bg-gray-300 h-4 w-32 md:w-40 block animate-pulse"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <div class="container px-20 py-6 justify-center">
+        <div class="flex flex-row gap-8 md:gap-32">
+            <div class="flex flex-col justify-center gap-5">
+                <div class="w-24 md:w-48">
+                    <img class="inline-block rounded-full ring-2 ring-white"
+                        [src]="profile.avatar_url ? profile.avatar_url : 'https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png'"
+                        alt="Profile Picture" />
+                </div>
+                <div>
+                    <a href="{{ profile.html_url }}" target="_blank" rel="noopener noreferrer">{{ profile.html_url }}</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col justify-start gap-5">
+                <h2 class="text-lg md:text-2xl font-semibold">{{ profile.name ? profile.name : "No name" }}</h2>
+                <p class="text-sm md:text-base">{{ profile.bio ? profile.bio : "No bio" }}</p>
+                <p>
+                    <ng-container *ngIf="profile.twitter_username">
+                        Twitter:
+                        <a [href]="'https://twitter.com/' + profile.twitter_username" target="_blank"
+                            rel="noopener noreferrer">{{ "https://twitter.com/" + profile.twitter_username }}</a>
+                    </ng-container>
+                    <ng-container *ngIf="!profile.twitter_username">No Twitter account</ng-container>
+                </p>
+            </div>
+        </div>
+
+        <div class="flex flex-col mt-8 md:mt-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div *ngFor="let repo of profile.repos; index as i">
+                    <div class="bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white truncate mb-2">
+                            {{ repo.name ? repo.name : "No name" }}
+                        </h5>
+                        <p class="text-base text-gray-700 dark:text-gray-400 truncate mb-2">
+                            {{ repo.description ? repo.description : "No description" }}
+                        </p>
+                        <div class="max-w-full">
+                            <ng-container *ngIf="repo.topics && repo.topics.length > 0; else noTopicsBlock">
+                                <p class="text-base text-gray-400 dark:text-gray-400 line-clamp-2">
+                                    {{ repo.topics.join(" ") }}
+                                </p>
+                            </ng-container>
+                            <ng-template #noTopicsBlock>
+                                <p class="text-base text-gray-400 dark:text-gray-400">No topics</p>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

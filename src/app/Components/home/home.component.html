@@ -1,0 +1,17 @@
+<div class="flex flex-col items-center justify-center">
+  <app-get-user 
+    (submitUser)="showProfile($event)"
+    class="mb-8"
+  ></app-get-user>
+
+  <div
+    class="flex justify-center items-center flex-col"
+    *ngIf="userName !== ''; else elseBlock"
+  >
+    <app-show-repo [profile]="profile"></app-show-repo>
+  </div>
+  
+  <ng-template #elseBlock>
+      <p class="text-center">Please Enter the Username</p>
+  </ng-template>
+</div>

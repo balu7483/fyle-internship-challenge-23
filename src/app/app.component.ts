@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api.service';
+import { Profile } from './models/Profile';
+import { map, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +9,18 @@ import { ApiService } from './services/api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  constructor(
-    private apiService: ApiService
-  ) {}
 
-  ngOnInit() {
-    this.apiService.getUser('johnpapa').subscribe(console.log);
+
+  constructor(
+
+  ) {
+
   }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+
+  
+
 }
